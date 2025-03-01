@@ -14,6 +14,7 @@ url: String
 
 type Category {
 _id: ID!
+language: String!
 type: String!
 description: String
 
