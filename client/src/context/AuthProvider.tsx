@@ -1,7 +1,6 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { AuthContext } from "../utils/Auth"; // 👈 Import from new location
 
 interface User {
   id: string;
@@ -9,19 +8,27 @@ interface User {
   exp: number;
 }
 
+interface AuthContextProps {
+  user: User | null;
+  login: (token: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
+
+const AuthContext = createContext<AuthContextProps | null>(null);
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       try {
         const decodedUser: User = jwtDecode(token);
         if (decodedUser.exp * 1000 > Date.now()) {
           setUser(decodedUser);
-          console.log("✅ User persisted:", decodedUser);
+          console.log("User persisted:", decodedUser);
         } else {
           logout();
         }
@@ -38,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(decodedUser);
       navigate("/home");
     } catch (error) {
-      console.error("❌ Invalid login token:", error);
+      console.error("Invalid login token:", error);
     }
   };
 

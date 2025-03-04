@@ -7,7 +7,7 @@ type User {
 }
 
 type Resource {
-  #resourceId: ID!
+  resourceId: ID!
   title: String!
   description: String!
   url: String
