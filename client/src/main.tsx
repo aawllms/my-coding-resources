@@ -1,30 +1,24 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { AuthProvider } from "./context/AuthProvider";
-import App from "./App";
-import LoginForm from "./components/LoginForm";
-import SignupForm from "./components/SignupForm"; // 👈 Import signup form
-import ErrorPage from "./pages/ErrorPage";
+import App from "./App.jsx";
+import SearchResource from "./pages/SearchResources.js";
+import SavedResource from "./pages/SavedResources.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
       {
         index: true,
-        element: <LoginForm />,
+        element: <SearchResource />,
       },
       {
-        path: "/login",
-        element: <LoginForm />,
-      },
-      {
-        path: "/signup",
-        element: <SignupForm />,
+        path: "/saved",
+        element: <SavedResource />,
       },
     ],
   },
