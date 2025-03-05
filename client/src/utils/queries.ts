@@ -17,7 +17,7 @@ export const GET_SINGLE_USER = gql`
       username
       _id
       email
-      saveResource {
+      savedResource {
         resourceId
         title
         description
