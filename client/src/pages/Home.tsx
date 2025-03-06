@@ -16,9 +16,12 @@ export const Home = () => {
             <Row>
               {resourceData.map((resource: any) => (
                 <Col md="4" key={resource.resourceId}>
-                  <Card border="dark">
+                  <Card border="primary" bg="dark" text="light">
                     <Card.Body>
-                      <Card.Title>{resource.title}</Card.Title>
+                      <Card.Title style={{ fontSize: "1.5rem" }}>
+                        {resource.title}
+                      </Card.Title>
+                      <Card.Text>Category: {resource.category}</Card.Text>
                       <Card.Text>{resource.description}</Card.Text>
                     </Card.Body>
                   </Card>

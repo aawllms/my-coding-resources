@@ -5,6 +5,7 @@ export const SEARCH_RESOURCES = gql`
     searchResources(searchTerm: $searchTerm) {
       resourceId
       title
+      category
       description
       url
     }
@@ -14,6 +15,7 @@ export const GET_RESOURCES = gql`
   query getAllResources {
     getAllResources {
       title
+      category
       description
       url
     }

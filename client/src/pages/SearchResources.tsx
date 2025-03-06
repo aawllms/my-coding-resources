@@ -107,7 +107,7 @@ const SearchResources = () => {
                   placeholder="Search for a resource"
                 />
               </Col>
-              <Col xs={12} md={4}>
+              <Col xs={12} md={4} className="d-flex gap-1">
                 <Button
                   type="submit"
                   variant="success"
@@ -119,7 +119,7 @@ const SearchResources = () => {
                 <Button
                   onClick={() => setShowModal(true)}
                   type="button"
-                  variant="primary"
+                  variant="light"
                   size="lg"
                 >
                   Create Resource
@@ -140,17 +140,32 @@ const SearchResources = () => {
         <Row>
           {searchedResource.map((resource) => (
             <Col md="4" key={resource.resourceId}>
-              <Card border="dark">
+              <Card border="primary" bg="dark" text="light">
                 <Card.Body>
-                  <Card.Title>{resource.title}</Card.Title>
+                  <Card.Title style={{ fontSize: "1.5rem" }}>
+                    {resource.title}
+                  </Card.Title>
+                  <Card.Text>Category: {resource.category}</Card.Text>
+                  <br />
                   <Card.Text>{resource.description}</Card.Text>
+                  {resource.url ? (
+                    <Card.Link
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Resource Link
+                    </Card.Link>
+                  ) : null}
+                  <br />
+                  <br />
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedResourceIds?.some(
                         (savedResourceId: string) =>
                           savedResourceId === resource.resourceId
                       )}
-                      className="btn-block btn-info"
+                      className="btn-block btn-primary"
                       onClick={() => handleSaveResource(resource.resourceId)}
                     >
                       {savedResourceIds?.some(
