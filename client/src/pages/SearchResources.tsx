@@ -18,6 +18,8 @@ import { saveResourceIds, getSavedResourceIds } from "../utils/localStorage";
 import type { Resource } from "../models/Resource";
 import CreateResourceForm from "../components/CreateResource";
 
+import Home from "../pages/Home";
+
 const SearchResources = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -132,7 +134,7 @@ const SearchResources = () => {
         <h2 className="pt-5">
           {searchedResource.length
             ? `Viewing ${searchedResource.length} results:`
-            : "Search for a resource to begin"}
+            : ""}
         </h2>
         {error && <p>Error: {error.message}</p>} {/* Display any errors */}
         <Row>
@@ -165,6 +167,7 @@ const SearchResources = () => {
           ))}
         </Row>
       </Container>
+      <Home />
       <Modal
         size="lg"
         show={showModal}
