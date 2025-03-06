@@ -5,13 +5,18 @@ import { useQuery } from "@apollo/client";
 import { GET_SINGLE_USER } from "../utils/queries";
 import Auth from "../utils/Auth";
 import { removeResourceId, getSavedResourceIds } from "../utils/localStorage";
+import { useState, useEffect } from "react";
 
 const SavedResources = () => {
   const [deleteResource] = useMutation(DELETE_RESOURCE);
+  const [savedResources, setSavedResources] = useState([]);
+  const { loading, data, refetch } = useQuery(GET_SINGLE_USER);
 
-  const { loading, data } = useQuery(GET_SINGLE_USER);
-
-  const userData = data?.getSingleUser || { savedResources: [] };
+  useEffect(() => {
+    if (data?.getSingleUser?.savedResources) {
+      setSavedResources(data.getSingleUser.savedResources);
+    }
+  }, [data]);
 
   const handleDeleteResource = async (resourceId: string) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -28,6 +33,7 @@ const SavedResources = () => {
       });
 
       removeResourceId(resourceId);
+      refetch();
     } catch (err) {
       console.error(err);
     }
@@ -37,15 +43,14 @@ const SavedResources = () => {
     return <h2>LOADING...</h2>;
   }
 
-  // Retrieve saved resource IDs from local storage
   const savedResourceIds = getSavedResourceIds();
 
   return (
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          {userData.username ? (
-            <h1>Viewing {userData.username}'s saved resources!</h1>
+          {data?.getSingleUser?.username ? (
+            <h1>Viewing {data.getSingleUser.username}'s saved resources!</h1>
           ) : (
             <h1>Viewing saved resources!</h1>
           )}
@@ -53,14 +58,14 @@ const SavedResources = () => {
       </div>
       <Container>
         <h2 className="pt-5">
-          {userData?.savedResources?.length > 0
-            ? `Viewing ${userData.savedResources.length} saved ${
-                userData.savedResources.length === 1 ? "resource" : "resources"
+          {savedResources?.length > 0
+            ? `Viewing ${savedResources.length} saved ${
+                savedResources.length === 1 ? "resource" : "resources"
               }:`
             : "You have no saved resources!"}
         </h2>
         <Row>
-          {userData?.savedResources?.map((resource: any) => {
+          {savedResources?.map((resource: any) => {
             // Check if the resource ID is in the savedResourceIds array
             if (!savedResourceIds.includes(resource.resourceId)) {
               return null;

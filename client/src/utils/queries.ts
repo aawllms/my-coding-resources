@@ -10,6 +10,15 @@ export const SEARCH_RESOURCES = gql`
     }
   }
 `;
+export const GET_RESOURCES = gql`
+  query getAllResources {
+    getAllResources {
+      title
+      description
+      url
+    }
+  }
+`;
 
 export const GET_SINGLE_USER = gql`
   query GetMe {

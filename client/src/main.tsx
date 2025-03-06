@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.jsx";
 import SearchResource from "./pages/SearchResources.js";
 import SavedResource from "./pages/SavedResources.js";
+import Home from "./pages/Home.js";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/saved",
         element: <SavedResource />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
       },
     ],
   },
